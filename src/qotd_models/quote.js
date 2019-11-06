@@ -17,8 +17,7 @@ const Quote = mongoose.model('quotes', {
         }
     }, source: {
         type: String,
-        trim: true,
-        required: true
+        trim: true
     }
 })
 
