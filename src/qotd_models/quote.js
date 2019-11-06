@@ -18,6 +18,12 @@ const Quote = mongoose.model('quotes', {
     }, source: {
         type: String,
         trim: true
+    }, author: {
+        type: String,
+        trim: true
+    }, info: {
+        type: String,
+        trim: true
     }
 })
 
