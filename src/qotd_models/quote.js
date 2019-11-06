@@ -11,11 +11,15 @@ const Quote = mongoose.model('quotes', {
         trim: true,
         required: true,
         validate(value) {
-            if( value < 0 || value > 365 ) {
+            if (value < 0 || value > 365) {
                 throw new Error('Date must be within 1 and 365')
             }
         }
-    }, 
+    }, source: {
+        type: String,
+        trim: true,
+        required: true
+    }
 })
 
 module.exports = Quote

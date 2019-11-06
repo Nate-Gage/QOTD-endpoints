@@ -34,11 +34,11 @@ app.get('/quotes', async (req, res) => {
     }
 })
 
-app.get('/quotes/:id', async (req, res) => {
-    const _id = req.params.id
+app.get('/quotes/:date', async (req, res) => {
+    const date = req.params.date
     
     try {
-        const quote = await Quote.findById(_id)
+        const quote = await Quote.find({date})
         if (!quote) {
             return res.status(404).res.send()
         }
