@@ -49,6 +49,33 @@ app.get('/quotes/:date', async (req, res) => {
     }
 })
 
+app.patch('/quotes/:date', async (req, res) => {
+
+    const updates = Object.keys(req.body)
+    const allowedUpdates = ['date', 'body', 'author', 'source', 'info']
+    const validOperation = updates.every((update) => {
+        return allowedUpdates.includes(update)
+    })
+
+    if (!validOperation) {
+        res.status(400).send({ error: 'Invalid updates'})
+    }
+
+    const date = req.params.date
+
+    try {
+        const quote = await Quote.findOneAndUpdate({date}, req.body, { new: true, runValidators: true })
+
+        if(!quote) {
+            res.status(404).send()
+        }
+
+        res.send(quote)
+    } catch (e) {
+        res.status(500).send(e)
+    }
+})
+
 
 app.listen(port, () => {
     console.log('Server is up on Port ' + port)

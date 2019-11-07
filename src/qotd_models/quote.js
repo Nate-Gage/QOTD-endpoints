@@ -2,11 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 
 const Quote = mongoose.model('quotes', {
-    body: {
-        type: String,
-        trim: true,
-        required: true
-    }, date: {
+    date: {
         type: Number,
         trim: true,
         required: true,
@@ -15,10 +11,14 @@ const Quote = mongoose.model('quotes', {
                 throw new Error('Date must be within 1 and 365')
             }
         }
-    }, source: {
+    }, body: {
+        type: String,
+        trim: true,
+        required: true
+    }, author: {
         type: String,
         trim: true
-    }, author: {
+    }, source: {
         type: String,
         trim: true
     }, info: {
