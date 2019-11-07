@@ -1,21 +1,26 @@
 const mongoose = require('mongoose')
-const nconf = require('nconf')
+const fs = require('fs')
 
-// Read in keys and secrets. Using nconf we can set secrets via keys.json file.
-nconf.argv().env().file('keys.json')
+// Reading the object 
+var data = fs.readFileSync(__dirname + '/keys.json')
 
-const user = nconf.get('mongoUser')
-const pass = nconf.get('mongoPass')
-const host = nconf.get('mongoHost')
-const port = nconf.get('mongoPort')
+// Parsing the object
+var keys = JSON.parse(data)
 
-let uri = 'mongodb:${user}:${pass}@${host}:${port}'
+const user = keys.mongoUser
+const pass = keys.mongoPass
 
-//and then replace your 127.0.0.1 connection value with the uri property
+var uri = 'mongodb+srv://' + user + ':' + pass + '@cluster0-rzsox.gcp.mongodb.net/quotes?retryWrites=true&w=majority'
 
-mongoose.connect(uri + '/quotes', {
+mongoose.connect(uri, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false
+})
+
+var connection = mongoose.connection
+
+connection.on('connected', function () {
+    console.log('Connected to MongoDB')
 })
