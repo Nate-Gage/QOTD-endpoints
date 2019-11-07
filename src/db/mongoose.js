@@ -9,8 +9,9 @@ var keys = JSON.parse(data)
 
 const user = keys.mongoUser
 const pass = keys.mongoPass
+const host = keys.hostName
 
-var uri = 'mongodb+srv://' + user + ':' + pass + '@cluster0-rzsox.gcp.mongodb.net/quotes?retryWrites=true&w=majority'
+var uri = 'mongodb+srv://' + user + ':' + pass + host
 
 mongoose.connect(uri, {
     useUnifiedTopology: true,
