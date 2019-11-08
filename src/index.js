@@ -78,8 +78,9 @@ app.patch('/quotes/:date', async (req, res) => {
 
 app.delete('/quotes/:date', async (req, res) => {
 
+        const date = req.params.date
     try {
-        const quote = await Quote.findOneAndDelete(req.params.date)
+        const quote = await Quote.findOneAndDelete({date})
 
         if (!quote) {
             res.status(404).send('No quote found')
