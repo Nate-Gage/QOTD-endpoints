@@ -36,9 +36,9 @@ app.get('/quotes', async (req, res) => {
 
 app.get('/quotes/:date', async (req, res) => {
     const date = req.params.date
-    
+
     try {
-        const quote = await Quote.find({date})
+        const quote = await Quote.find({ date })
         if (!quote) {
             return res.status(404).res.send()
         }
@@ -58,21 +58,36 @@ app.patch('/quotes/:date', async (req, res) => {
     })
 
     if (!validOperation) {
-        res.status(400).send({ error: 'Invalid updates'})
+        res.status(400).send({ error: 'Invalid updates' })
     }
 
     const date = req.params.date
 
     try {
-        const quote = await Quote.findOneAndUpdate({date}, req.body, { new: true, runValidators: true })
+        const quote = await Quote.findOneAndUpdate({ date }, req.body, { new: true, runValidators: true })
 
-        if(!quote) {
+        if (!quote) {
             res.status(404).send()
         }
 
         res.send(quote)
     } catch (e) {
         res.status(500).send(e)
+    }
+})
+
+app.delete('/quotes/:date', async (req, res) => {
+
+    try {
+        const quote = await Quote.findOneAndDelete(req.params.date)
+
+        if (!quote) {
+            res.status(404).send('No quote found')
+        }
+
+        res.send(quote)
+    } catch (e) {
+        res.status(500).send()
     }
 })
 
