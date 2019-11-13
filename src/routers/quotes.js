@@ -2,8 +2,9 @@ const express = require('express')
 const router = new express.Router()
 const Quote = require('../qotd_models/quote')
 const fs = require('fs')
+const path = require('path')
 
-var data = fs.readFileSync('/Users/nate/Desktop/QOTD-project/src/db/keys.json')
+var data = fs.readFileSync(path.join(__dirname, '..', 'db/keys.json'))
 
 var keys = JSON.parse(data)
 
