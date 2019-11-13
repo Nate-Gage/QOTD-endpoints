@@ -30,6 +30,7 @@ mongoose.connect(uri, {
 
 var connection = mongoose.connection
 
+
 connection.on('connected', function () {
     console.log('Connected to MongoDB')
 })
