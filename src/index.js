@@ -9,5 +9,5 @@ app.use(express.json())
 app.use(quotesRouter)
 
 app.listen(port, () => {
-    console.log('Server is up on Port ' + port)
+    console.log('Local server is up on Port ' + port)
 })
