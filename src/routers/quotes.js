@@ -1,11 +1,23 @@
 const express = require('express')
 const router = new express.Router()
 const Quote = require('../qotd_models/quote')
+const fs = require('fs')
+
+var data = fs.readFileSync('/Users/nate/Desktop/QOTD-project/src/db/keys.json')
+
+var keys = JSON.parse(data)
 
 router.post('/quotes', async (req, res) => {
+
+    const authID = keys.authID
     const quote = new Quote(req.body)
 
     try {
+
+        if(req.header('authID') != authID) {
+            return res.status(401).send('Authorization ID required')
+        }
+
         await quote.save()
         res.status(201).send(quote)
     } catch (e) {
@@ -30,6 +42,7 @@ router.get('/quotes', async (req, res) => {
 
 router.get('/quotes/:date', async (req, res) => {
     const date = req.params.date
+    console.log(req.headers)
 
     try {
         const quote = await Quote.find({ date })

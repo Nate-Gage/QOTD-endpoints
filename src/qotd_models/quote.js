@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 
-const Quote = mongoose.model('quotes', {
+const quoteSchema = new mongoose.Schema({
     date: {
         type: Number,
         trim: true,
@@ -26,5 +26,7 @@ const Quote = mongoose.model('quotes', {
         trim: true
     }
 })
+
+const Quote = mongoose.model('quotes', quoteSchema)
 
 module.exports = Quote
