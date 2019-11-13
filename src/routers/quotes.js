@@ -86,8 +86,14 @@ router.patch('/quotes/:date', async (req, res) => {
 
 router.delete('/quotes/:date', async (req, res) => {
 
-        const date = req.params.date
+    const authID = keys.authID    
+    const date = req.params.date
+
     try {
+        if(req.header('authID') != authID) {
+            return res.status(401).send('Authorization ID required')
+        }
+
         const quote = await Quote.findOneAndDelete({date})
 
         if (!quote) {
