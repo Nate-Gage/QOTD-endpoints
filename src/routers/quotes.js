@@ -115,7 +115,7 @@ router.delete('/quotes/', async (req, res) => {
             return res.status(401).send('Authorization ID required')
         }
 
-        const quote = await Quote.remove({ date: { $lt: 366 }});
+        const quote = await Quote.deleteMany({ date: { $lt: 366 }});
 
         if (!quote) {
             res.status(404).send('No quote found')
