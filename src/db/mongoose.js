@@ -12,9 +12,6 @@ const pass = keys.mongoPass
 const host = keys.hostName
 const environment = keys.environment
 
-//Use this URL for Nate's Mongo database: 'mongodb://127.0.0.1:27017/quotes'
-//Use this URL to connect to Google Cloud account: 'mongodb+srv://' + user + ':' + pass + host
-
 if (environment == 'dev') {
     var uri = 'mongodb://127.0.0.1:27017/quotes'
 } else if (environment == 'prod') {
@@ -29,7 +26,6 @@ mongoose.connect(uri, {
 })
 
 var connection = mongoose.connection
-
 
 connection.on('connected', function () {
     console.log('Connected to MongoDB')

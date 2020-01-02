@@ -106,4 +106,25 @@ router.delete('/quotes/:date', async (req, res) => {
     }
 })
 
+router.delete('/quotes/', async (req, res) => {
+
+    const authID = keys.authID    
+
+    try {
+        if(req.header('authID') != authID) {
+            return res.status(401).send('Authorization ID required')
+        }
+
+        const quote = await Quote.remove({ date: { $lt: 366 }});
+
+        if (!quote) {
+            res.status(404).send('No quote found')
+        }
+
+        res.send(quote)
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
 module.exports = router
